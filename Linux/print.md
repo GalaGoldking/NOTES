@@ -1,0 +1,4 @@
+cat
+head
+tail
+more
