@@ -23,3 +23,5 @@ Verbose output level 2: -vv
 # -o
 Save the output into file <br>
 nmap -sC -sV -o nmap_result.txt 10.10.10.10
+# nmap as dirbuster
+nmap --script http-enum -p80 <target>
