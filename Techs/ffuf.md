@@ -6,7 +6,7 @@ ffuf -w /usr/share/wordlists/seclists/Usernames/Names/names.txt -X POST -d "user
 ffuf -w [wordlist] -H "Host: FUZZ.[URL]" -u [URL]
 
 ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.domain.com" -w http(s)://domain.com -t 300
-<h3 style="color: red;">Exclude file size</h3>
+<h3>Exclude file size</h3>
 ffuf -w [wordlist] -H "Host: FUZZ.[URL]" -u [URL] -fs [file size]
 
 ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.domain.com" -u [URL] -fs 2222
