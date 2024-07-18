@@ -10,3 +10,7 @@ ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.
 ffuf -w [wordlist] -H "Host: FUZZ.[URL]" -u [URL] -fs [file size]
 
 ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.domain.com" -u [URL] -fs 2222
+# Password Brute-Forcing
+ffuf -w [Username wordlist]:W1, [Password wordlist]:W2 -X [method] -d "username=W1&password=W2" -H "Content-Type: application/x-www-form-urlencoded" -u http(s)://[URL] -fc [HTTP status]
+
+ffuf -w /usr/share/wordlists/seclists/Usernames/Names/names.txt:W1,/usr/share/wordlists/seclists/Password/Common-Credentials/10-million-password-list-top-100.txt:W2 -X POST -d "username=W1&password=W2" -H "Content-Type: application/x-www-form-urlencoded" -u http://domain.com -fc [200]
