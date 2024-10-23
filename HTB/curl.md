@@ -34,3 +34,14 @@ curl -H '[HEADER]: [PARAMETER]' [URL]
 
 curl -A 'Mozilla/5.11' [URL]
 
+# Specify Request Method
+
+curl -X [METHOD] [URL]
+
+# POST data with curl
+
+curl -X POST -d 'username=admin&password=admin' [URL]
+
+# Using cookie with curl
+
+curl -b '[cookie name]=[cookie parameter]' [URL]
