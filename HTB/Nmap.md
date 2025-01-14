@@ -201,3 +201,88 @@ Host is up (0.086s latency). <br>
 MAC Address: DE:AD:00:00:BE:EF <br>
 Nmap done: 1 IP address (1 host up) scanned in 0.11 seconds
 
+# Host and Port Scanning
+
+There are a total of 6 different states for a scanned port we can obtain:
+
+<table>
+  <tr>
+    <th>State</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>open</td>
+    <td>This indicates that the connection to the scanned port has been established. These connections can be TCP connections, UDP datagrams as well as SCTP associations.
+</td>
+  </tr>
+  <tr>
+    <td>closed</td>
+    <td>When the port is shown as closed, the TCP protocol indicates that the packet we received back contains an RST flag. This scanning method can also be used to determine if our target is alive or not.
+</td>
+  </tr>
+  <tr>
+    <td>filtered</td>
+    <td>Nmap cannot correctly identify whether the scanned port is open or closed because either no response is returned from the target for the port or we get an error code from the target.</td>
+  </tr>
+  <tr>
+    <td>unfiltered</td>
+    <td>This state of a port only occurs during the TCP-ACK scan and means that the port is accessible, but it cannot be determined whether it is open or closed.</td>
+  </tr>
+</table>
+
+# Discovering Open TCP Ports
+
+By default, Nmap scans the top 1000 TCP ports with the SYN scan ( -sS ). This SYN scan is set only to default when we run it as root because of the socket permissions required to create raw TCP packets. Otherwise, the TCP scan ( -sT ) is performed by default. This means that if we do not define ports and scanning methods, these parameters are set automatically. We can define the ports one by one ( -p 22,25,80,139,445 ), by range ( -p 22-445 ), by top ports ( --top-ports=10 ) from the Nmap database that have been signed as most frequent, by scanning all ports ( -p- ) but also by defining a fast port scan, which contains top 100 ports ( -F ).
+
+
+# Nmap - Trace the Packets
+
+sudo nmap 10.129.2.28 -p 21 --packet-trace -Pn -n --disable-arp-ping 
+
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-06-15 15:39 CEST <br>
+SENT (0.0429s) TCP 10.10.14.2:63090 > 10.129.2.28:21 S ttl=56 id=57322 <br>
+iplen=44 seq=1699105818 win=1024 <mss 1460> <br>
+RCVD (0.0573s) TCP 10.129.2.28:21 > 10.10.14.2:63090 RA ttl=64 id=0 <br>
+iplen=40 seq=0 win=0 <br>
+Nmap scan report for 10.11.1.28 <br>
+Host is up (0.014s latency). <br>
+
+PORT STATE SERVICE <br>
+21/tcp closed ftp <br>
+MAC Address: DE:AD:00:00:BE:EF (Intel Corporate)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.07 seconds 
+
+<table>
+  <tr>
+    <th>Scanning Options</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>10.129.2.28</td>
+    <td>Scans the specified target.</td>
+  </tr>
+  <tr>
+    <td>-p 21</td>
+    <td>Scans only the specified port.</td>
+  </tr>
+  <tr>
+    <td>--packet-trace</td>
+    <td>Shows all packets sent and received.</td>
+  </tr>
+  <tr>
+    <td>-n</td>
+    <td>Disables DNS resolution.</td>
+  </tr>
+  <tr>
+    <td>--disable-arp-ping</td>
+    <td>Disables ARP ping.</td>
+  </tr>
+</table>
+
+
+
+
+
+
+
