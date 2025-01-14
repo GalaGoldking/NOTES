@@ -4,7 +4,16 @@ nmap [OPTIONS] [IP Adress]
 nmap -sC -sV 10.10.10.10
 # Scan Network Range
 nmap [Target Network Range] -sn
-# Fitler nmap output to show only IP addresses
+# Scan Multiple IPs
+By specifying multiple addresses
+
+sudo nmap -sn -oA tnet 10.129.2.18 10.129.2.19 10.129.2.20
+
+If these IP addresses are next to each other, we can also define the range in the respective octet.
+
+sudo nmap -sn -oA tnet 10.129.2.18-20
+
+# Filter nmap output to show only IP addresses
 
 nmap [Target network range] -sn -oA tnet | grep for | cut -d" " -f5
 
