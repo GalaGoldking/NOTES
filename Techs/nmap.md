@@ -8,6 +8,10 @@ nmap [Target Network Range] -sn
 
 nmap [Target network range] -sn -oA tnet | grep for | cut -d" " -f5
 
+# Scan IP List
+
+sudo nmap -sn -oA tnet -iL [File with IP addreses]
+
 # Options
 # -sn
 nmap -sn 10.10.10.10
@@ -38,6 +42,10 @@ nmap -sC -sV -o nmap_result.txt 10.10.10.10
 nmap -oA 'tnet' 10.10.10.10
 
 Store the results in all formats starting with the name 'tnet'
+# -iL
+nmap -iL [file with targets]
+
+scan multiple targets from specified file
 # nmap as dirbuster
 nmap --script http-enum -p80 <target>
 # Find vulnerabilities with nmap
