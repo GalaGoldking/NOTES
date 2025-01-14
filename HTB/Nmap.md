@@ -280,9 +280,81 @@ Nmap done: 1 IP address (1 host up) scanned in 0.07 seconds
   </tr>
 </table>
 
+# Request
 
+<table>
+  <tr>
+    <th>Message</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>SENT (0.0429s)</td>
+    <td>Indicates the SENT operation of Nmap, which sends a packet to the target.</td>
+  </tr>
+  <tr>
+    <td>TCP</td>
+    <td>Shows the protocol that is being used to interact with the target port.</td>
+  </tr>
+  <tr>
+    <td>10.10.14.2:63090 ></td>
+    <td>Represents our IPv4 address and the source port, which will be used by Nmap to send the packets.</td>
+  </tr>
+  <tr>
+    <td>10.129.2.28:21 </td>
+    <td>Shows the target IPv4 address and the target port</td>
+  </tr>
+  <tr>
+    <td>S</td>
+    <td>SYN flag of the sent TCP packet. </td>
+  </tr>
+  <tr>
+    <td>ttl=56 id=57322 iplen=44 seq=1699105818 win=1024 mss 1460</td>
+    <td>Additional TCP Header parameters. </td>
+  </tr>
+</table>
 
+# Response
 
+<table>
+  <tr>
+    <th>Message</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>RCVD (0.0573s) </td>
+    <td>Indicates a received packet from the target.</td>
+  </tr>
+  <tr>
+    <td>TCP</td>
+    <td>Shows the protocol that is being used.</td>
+  </tr>
+  <tr>
+    <td>10.129.2.28:21 </td>
+    <td>Represents targets IPv4 address and the source port, which will be used to reply.</td>
+  </tr>
+  <tr>
+    <td>10.10.14.2:63090 ></td>
+    <td>Shows our IPv4 address and the port that will be replied to.</td>
+  </tr>
+  <tr>
+    <td>RA</td>
+    <td>RST and ACK flags of the sent TCP packet.</td>
+  </tr>
+  <tr>
+    <td>ttl=64 id=0 iplen=40 seq=0 win=0</td>
+    <td>Additional TCP Header parameters.</td>
+  </tr>
+</table>
 
+# Connect Scan
+
+The Nmap TCP Connect Scan ( -sT ) uses the TCP three-way handshake to determine if a
+specific port on a target host is open or closed. The scan sends an SYN packet to the target port and waits for a response. It is considered open if the target port responds with an SYNACK packet and closed if it responds with an RST packet. 
+
+The Connect scan (also known as a full TCP connect scan) is highly accurate because it completes the three-way TCP handshake, allowing us to determine the exact state of a port (open, closed, or filtered). However, it is not the most stealthy. In fact, the Connect scan is one of the least stealthy techniques, as it fully establishes a connection, which creates logs on most systems and is easily detected by modern IDS/IPS solutions. That said, the Connect scan can still be useful in certain situations, particularly when accuracy is a priority, and the goal is to map the network without causing significant disruption to services. Since the scan fully establishes a TCP connection, it interacts cleanly with services, making it less likely to cause service errors or instability compared to more intrusive scans. While it is not the most stealthy method, it is sometimes considered a more "polite" scan because it behaves like a normal client connection, thus having minimal impact on the target services. 
+
+It is also useful when the target host has a personal firewall that drops incoming packets but allows outgoing packets. In this case, a Connect scan can bypass the firewall and accurately determine the state of the target ports. However, it is important to note that the Connect scan is slower than other types of scans because it requires the scanner to wait for a response from the target after each packet it sends, which could take some time if the target is busy or unresponsive. 
+
+Scans like the SYN scan (also known as a half-open scan) are generally considered more stealthy because they do not complete the full handshake, leaving the connection incomplete after sending the initial SYN packet. This minimizes the chance of triggering connection logs while still gathering port state information. Advanced IDS/IPS systems, however, have adapted to detect even these subtler techniques.
 
 
