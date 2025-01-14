@@ -17,7 +17,6 @@ sudo nmap -sn -oA tnet 10.129.2.18-20
 
 sudo nmap 10.129.2.18 -sn -oA host -PE --reason
 
-
 # Filter nmap output to show only IP addresses
 
 nmap [Target network range] -sn -oA tnet | grep for | cut -d" " -f5
@@ -35,10 +34,14 @@ Disable port scan
 Aggresive mode
 # -sC 
 Runs safe scripts
+# -sT
+TCP Connect Scan
 # -T[number]
 Specify number of threads running at the same time to increase speed of scan
 # -n
 No dns lookup
+
+Disables DNS resolution.
 # -Pn
 No ping
 # -p
@@ -46,6 +49,8 @@ Specify ports <br>
 To scan one or more ports: -p [PORT, PORT, ...] <br>
 To scan interval of ports: -p 1000-1100 <br>
 To scan all ports: -p- 
+# -F
+Scan top 100 ports
 # --top-ports
 To scan number of most frequent ports 
 
@@ -67,4 +72,4 @@ scan multiple targets from specified file
 # nmap as dirbuster
 nmap --script http-enum -p80 <target>
 # Find vulnerabilities with nmap
-nmap --script vuln -sC -sV <target> <input type="text">
+nmap --script vuln -sC -sV <target>
