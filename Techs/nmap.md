@@ -1,7 +1,14 @@
 # Usage 
 nmap [OPTIONS] [IP Adress]
+
 nmap -sC -sV 10.10.10.10
+# Scan Network Range
+nmap [Target Network Range] -sn
 # Options
+# -sn
+nmap -sn 10.10.10.10
+
+Disable port scan
 # -A 
 Aggresive mode
 # -sC 
@@ -23,6 +30,10 @@ Verbose output level 2: -vv
 # -o
 Save the output into file <br>
 nmap -sC -sV -o nmap_result.txt 10.10.10.10
+# -oA
+nmap -oA 'tnet' 10.10.10.10
+
+Store the results in all formats starting with the name 'tnet'
 # nmap as dirbuster
 nmap --script http-enum -p80 <target>
 # Find vulnerabilities with nmap
