@@ -4,6 +4,10 @@ nmap [OPTIONS] [IP Adress]
 nmap -sC -sV 10.10.10.10
 # Scan Network Range
 nmap [Target Network Range] -sn
+# Fitler nmap output to show only IP addresses
+
+nmap [Target network range] -sn -oA tnet | grep for | cut -d" " -f5
+
 # Options
 # -sn
 nmap -sn 10.10.10.10
