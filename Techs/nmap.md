@@ -13,6 +13,11 @@ If these IP addresses are next to each other, we can also define the range in th
 
 sudo nmap -sn -oA tnet 10.129.2.18-20
 
+# Determine why target is alive
+
+sudo nmap 10.129.2.18 -sn -oA host -PE --reason
+
+
 # Filter nmap output to show only IP addresses
 
 nmap [Target network range] -sn -oA tnet | grep for | cut -d" " -f5
@@ -40,7 +45,11 @@ No ping
 Specify ports <br>
 To scan one or more ports: -p [PORT, PORT, ...] <br>
 To scan interval of ports: -p 1000-1100 <br>
-To scan all ports: -p- <br>
+To scan all ports: -p- 
+# --top-ports
+To scan number of most frequent ports 
+
+nmap --top-ports=10 10.10.10.10
 # -v
 Verbose output level 1: -v <br>
 Verbose output level 2: -vv
@@ -58,4 +67,4 @@ scan multiple targets from specified file
 # nmap as dirbuster
 nmap --script http-enum -p80 <target>
 # Find vulnerabilities with nmap
-nmap --script vuln -sC -sV <target>
+nmap --script vuln -sC -sV <target> <input>
