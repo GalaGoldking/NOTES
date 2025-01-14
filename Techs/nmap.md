@@ -67,4 +67,4 @@ scan multiple targets from specified file
 # nmap as dirbuster
 nmap --script http-enum -p80 <target>
 # Find vulnerabilities with nmap
-nmap --script vuln -sC -sV <target> <input>
+nmap --script vuln -sC -sV <target> <input type="text">
