@@ -6,9 +6,27 @@ If the database considers spaces as valid characters between inputs and doesn’
 
 # Example of Usage
 
-<ol>
-  <li>
-    ![image](https://github.com/user-attachments/assets/a95d4c54-59ad-462e-8669-55eb2d58804a)
+<h3>1st Step</h3> 
 
-  </li>
-</ol>
+send POST request with login/register page and catch it with burp
+
+![image](https://github.com/user-attachments/assets/8d7ac287-81a3-4f80-ae5a-28c7e2c1da97)
+
+<h3>2nd Step</h3>
+
+In burp add "+" and random value in the end with new password
+
+![image](https://github.com/user-attachments/assets/53b30ce3-0a72-4a21-a09f-c1113ed500b7)
+
+<h3>3rd Step</h3>
+
+Output should be like this
+
+![image](https://github.com/user-attachments/assets/23725d8f-6d7a-485e-ad26-0372c51b489f)
+
+
+<h3>4th Step</h3>
+
+Now login with rewritten password
+
+![image](https://github.com/user-attachments/assets/158bf488-d419-4346-b1cd-d17e7195c6e0)
