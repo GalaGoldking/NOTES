@@ -8,6 +8,10 @@ hashcat [OUTPUT].hashes --user
 
 Using --user flag because in output file hash starts with username and seperates with :
 
-#Checking output
+# Checking output
 
 hashcat [OUTPUT].hashes --show --user
+
+![image](https://github.com/user-attachments/assets/6fd38a0e-f285-49e8-8fb3-23dec57af27f)
+
+Cracked password in the end
