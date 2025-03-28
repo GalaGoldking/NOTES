@@ -14,9 +14,12 @@ Result if service is not found
 
 <h3>Enumerate shares</h3>
 
-crackmapexec [SERVICE] [HOST] -u [USERNAME] -p [PASSWORD] --shares
+crackmapexec smb [HOST] -u [USERNAME] -p [PASSWORD] --shares
 
 <h3>Enumerate users</h3>
 
-crackmapexec [SERVICE] [HOST] -u [USERNAME] -p [PASSWORD] --users
+crackmapexec smb [HOST] -u [USERNAME] -p [PASSWORD] --users
 
+<h3>No cred enumeration</h3>
+
+crackmapexec smb [HOST] -u guest -p '' --rid-brute
