@@ -22,7 +22,7 @@ If credentials are incorrect
 
 ![image](https://github.com/user-attachments/assets/9736e240-d0dc-4970-b72a-e9131864852c)
 
-<h3>If credentials are found</h3>
+<h3>If you have list of usernames and passwords</h3>
 
 Try password spraying
 
