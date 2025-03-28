@@ -10,3 +10,8 @@ crackmapexec [SERVICE] [HOST] -u [USERNAME] -p [PASSWORD]
 
 [Link for crackmapexec cheat sheet](https://github.com/GalaGoldking/NOTES/blob/main/Techs/crackmapexec.md)
 
+<h3>If SMB found</h3>
+
+Try connecting to smb with smbclient
+
+smblient //[HOST]/[SHARE] -U [USERNAME] 
