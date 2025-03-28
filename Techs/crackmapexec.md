@@ -23,3 +23,13 @@ crackmapexec smb [HOST] -u [USERNAME] -p [PASSWORD] --users
 <h3>No cred enumeration</h3>
 
 crackmapexec smb [HOST] -u guest -p '' --rid-brute
+
+# Password spraying
+
+<h3>Password spraying</h3>
+
+crackmapexec [SERVICE] [HOST] -u [user_list.txt] -p [password_list.txt] 
+
+To continue all variations even though one combination was successful use this flag --continue-on-success
+
+crackmapexec [SERVICE] [HOST] -u [user_list.txt] -p [password_list.txt] --continue-on-success
