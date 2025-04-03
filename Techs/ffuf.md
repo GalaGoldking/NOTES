@@ -1,14 +1,17 @@
 # Directory brute-forcing
 ffuf -w [wordlist] -u [URL]/FUZZ
 
-# Subdomain/VHOST enumeration
+ffuf -w [wordlist] -u http(s)://example.com/FUZZ
+
+# VHOST enumeration
 ffuf -w [wordlist] -H "Host: FUZZ.[URL]" -u [URL]
 
 ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.domain.com" -w http(s)://domain.com -t 300
-<h3>Exclude file size</h3>
-ffuf -w [wordlist] -H "Host: FUZZ.[URL]" -u [URL] -fs [file size]
 
-ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.domain.com" -u [URL] -fs 2222
+# Subdomain enumeration
+ffuf -w [wordlist] -u FUZZ.[URL]
+
+ffuf -w [wordlist] -u http(s)://FUZZ.example.com
 
 # Username Enumaration
 ffuf -w [wordlist] -X [method] -d "username=FUZZ&email=x&password=x&cpassword=x" -H "Content-Type: application/x-www-form-urlencoded" -u [URL] -mr "[output message]"
@@ -33,6 +36,14 @@ ffuf -w [wordlist] -u [URL]/FUZZ -recursive
 -recurion-depth
 
 ffuf -w [wordlist] -u [URL]/FUZZ -recursive -recursive-depth 1
+
+### Exclude file size<
+
+-fs
+
+ffuf -w [wordlist] -H "Host: FUZZ.[URL]" -u [URL] -fs [file size]
+
+ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.domain.com" -u [URL] -fs 2222
 
 ### Specify extension
 
