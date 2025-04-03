@@ -37,13 +37,35 @@ ffuf -w [wordlist] -u [URL]/FUZZ -recursive
 
 ffuf -w [wordlist] -u [URL]/FUZZ -recursive -recursive-depth 1
 
-### Exclude file size<
+### Filtering
+
+#### Filter file size
 
 -fs
 
 ffuf -w [wordlist] -H "Host: FUZZ.[URL]" -u [URL] -fs [file size]
 
 ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.domain.com" -u [URL] -fs 2222
+
+#### Filter HTTP status code
+
+-fc
+
+ffuf -w [wordlist] -u [URL] -fc [status code]
+
+ffuf -w [wordlist] -u [URL] -fc 404
+
+#### Filter line count
+
+ffuf -w [wordlist] -u [URL] -fl [line count]
+
+ffuf -w [wordlist] -u [URL] -fl 10
+
+#### Filter amount of words
+
+ffuf -w [wordlist] -u [URL] -fw [word count]
+
+ffuf -w [wordlist] -u [URL] -fw 23
 
 ### Specify extension
 
