@@ -35,7 +35,12 @@ Try connecting to smb with smbclient
 smblient //[HOST]/[SHARE] -U [USERNAME] 
 
 [Link for SMBclient notes](https://github.com/GalaGoldking/NOTES/blob/main/Techs/smbclient.md)
+
 [Link for SMB notes](https://github.com/GalaGoldking/NOTES/blob/main/Techs/smb.md)
+
+Slice out all users into one file
+
+crackmapexec smb [HOST] -u [USERNAME] -p [PASSWORD] | grep "SidTypeUser" | awk -F '\\' '{print $2}' | awk '{print $1}' > users.txt
 
 <h3>MSSQL</h3>
 
