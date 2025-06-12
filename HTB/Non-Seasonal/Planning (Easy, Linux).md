@@ -40,4 +40,8 @@ Command used: ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/bitquark-subdo
 
 ![image](https://github.com/user-attachments/assets/1273a23f-a1fc-4bef-8372-d7eda2c08e47)
 
-Found grafana subdomain
+Found grafana subdomain. Add grafana.planning.htb to /etc/hosts. Looking at the site there is login form, tried using given credentials to login
+
+![image](https://github.com/user-attachments/assets/cc970d42-e085-40c2-bf8e-2c1356410f17)
+
+Looking at the footer i can see grafana version, seeing into it to check if it is vulnerable version or not. Found this [exploit](https://github.com/nollium/CVE-2024-9264) CVE-2024-9264
