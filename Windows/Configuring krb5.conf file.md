@@ -30,4 +30,4 @@
   ```
 - ### Set Kerberos Ticket Environment Variable
    Exported the ticket for use in subsequent commands. Allows tools like evil-winrm to use the cached ticket for authentication.
-  - 'export KRB5CCNAME=USER.name.ccache #After getting TGT with impacket-getTGT
+  - `export KRB5CCNAME=USER.name.ccache #After getting TGT with impacket-getTGT`
