@@ -6,3 +6,17 @@
 
 [date when started]
 
+## 2. Target Information
+
+### Base Page
+
+[target url]
+
+### IP Address
+
+[target IP]
+
+### Hosting Provider
+
+#### DNS Hosting
+
